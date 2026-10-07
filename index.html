@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko" translate="no" class="notranslate">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="google" content="notranslate">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F7F6F9">
+<title>정충용 ♥ 이소연 결혼합니다</title>
+<meta name="description" content="2027년 7월 3일 토요일 오후 1시 10분 · 포레스트 한울 웨딩">
+
+<!-- ▼ 카카오톡 미리보기 — 'YOUR-ID' 두 군데를 내 GitHub 아이디로 바꾸세요 (README 3단계) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="정충용 ♥ 이소연 결혼합니다">
+<meta property="og:description" content="2027년 7월 3일 토요일 오후 1시 10분 · 포레스트 한울 웨딩">
+<meta property="og:image" content="https://YOUR-ID.github.io/wedding/photos/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://YOUR-ID.github.io/wedding/">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%234A3D6E'/%3E%3Cpath d='M16 23s-7-4.4-7-9.2A3.8 3.8 0 0 1 16 12a3.8 3.8 0 0 1 7 1.8C23 18.6 16 23 16 23z' fill='%23E5DEF2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- 언어 · 음악 -->
+<div class="topbar" id="topbar">
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="ko" aria-pressed="true">한국어</button>
+    <button type="button" data-lang="ja" aria-pressed="false">日本語</button>
+  </div>
+  <button class="bgm" id="bgm" type="button" aria-pressed="false" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/><path class="mute" d="M3 3l18 18"/></svg>
+  </button>
+</div>
+
+<main class="page">
+
+  <!-- 첫 화면 -->
+  <header class="hero" id="top">
+    <h1 class="hero-names" id="heroNames">
+      <span class="nm" id="hG"></span>
+      <svg class="sprig" viewBox="0 0 24 64" aria-hidden="true">
+        <path d="M12 2v60" />
+        <path d="M12 14c-5-1-8-5-8-9 5 0 8 4 8 9zM12 26c5-1 8-5 8-9-5 0-8 4-8 9zM12 38c-5-1-8-5-8-9 5 0 8 4 8 9zM12 50c5-1 8-5 8-9-5 0-8 4-8 9z"/>
+      </svg>
+      <span class="nm" id="hB"></span>
+    </h1>
+    <figure class="hero-photo">
+      <img id="heroImg" alt="" fetchpriority="high">
+      <!-- 사진 위에서 천천히 흔들리는 나뭇잎 그림자 -->
+      <div class="dapple" aria-hidden="true"></div>
+    </figure>
+    <div class="hero-meta">
+      <p class="hero-when" id="heroWhen"></p>
+      <p class="hero-where" id="heroWhere"></p>
+    </div>
+  </header>
+
+  <!-- 초대의 글 -->
+  <section class="sec" id="invite" aria-labelledby="t-invite">
+    <h2 id="t-invite" data-t="inviteTitle"></h2>
+    <p class="greeting" id="greeting"></p>
+    <dl class="families" id="families"></dl>
+  </section>
+
+  <!-- 일시 -->
+  <section class="sec tint" id="when" aria-labelledby="t-when">
+    <h2 id="t-when" data-t="whenTitle"></h2>
+    <p class="bigday" id="bigDay"></p>
+    <p class="bigtime" id="bigTime"></p>
+    <div class="cal" aria-hidden="true">
+      <p class="cal-head" id="calHead"></p>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <p class="dday" id="dday"></p>
+    <div class="btnrow">
+      <a class="btn line" id="gcal" target="_blank" rel="noopener" data-t="gcal"></a>
+      <button class="btn line" type="button" id="ics" data-t="ics"></button>
+    </div>
+  </section>
+
+  <!-- 갤러리 -->
+  <section class="sec gal-sec" id="gallery" aria-labelledby="t-gal">
+    <h2 id="t-gal" data-t="galTitle"></h2>
+    <div class="strip" id="strip" tabindex="0" aria-roledescription="carousel"></div>
+    <div class="strip-foot"><span class="strip-count" id="stripCount"></span><span data-t="galHint"></span></div>
+  </section>
+
+  <!-- 오시는 길 -->
+  <section class="sec" id="way" aria-labelledby="t-way">
+    <h2 id="t-way" data-t="wayTitle"></h2>
+    <p class="venue" id="venue"></p>
+    <p class="addr"><span id="addr"></span></p>
+    <p class="addr-ko" id="addrKo" hidden></p>
+    <div class="maps" id="maps"></div>
+    <dl class="info" id="route"></dl>
+    <h3 class="sub" data-t="noticeTitle"></h3>
+    <dl class="info" id="notice"></dl>
+  </section>
+
+  <!-- 참석 여부 -->
+  <section class="sec tint" id="rsvp" aria-labelledby="t-rsvp">
+    <h2 id="t-rsvp" data-t="rsvpTitle"></h2>
+    <p class="lead" data-t-html="rsvpIntro"></p>
+    <p class="demo" data-t="demo" hidden></p>
+    <form class="form" id="rsvpForm" novalidate>
+      <fieldset class="fld"><legend data-t="fAttend"></legend>
+        <div class="seg">
+          <label><input type="radio" name="attend" value="1"><span data-t="attendYes"></span></label>
+          <label><input type="radio" name="attend" value="0"><span data-t="attendNo"></span></label>
+        </div></fieldset>
+      <fieldset class="fld"><legend data-t="fSide"></legend>
+        <div class="seg">
+          <label><input type="radio" name="side" value="groom"><span data-t="groomSide"></span></label>
+          <label><input type="radio" name="side" value="bride"><span data-t="brideSide"></span></label>
+        </div></fieldset>
+      <div class="row2">
+        <div class="fld"><label for="rName" data-t="fName"></label><input id="rName" maxlength="30" autocomplete="name"></div>
+        <div class="fld"><label for="rPhone" data-t="fPhone"></label><input id="rPhone" type="tel" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="010-0000-0000"></div>
+      </div>
+      <div class="more" id="rMore" hidden>
+        <div class="fld"><span class="lbl" id="lComp" data-t="fComp"></span>
+          <div class="stepper" role="group" aria-labelledby="lComp">
+            <button type="button" id="cMinus">−</button><output id="rComp" aria-live="polite">0</output><button type="button" id="cPlus">+</button>
+          </div>
+          <p class="hint" data-t="compHint"></p></div>
+        <fieldset class="fld"><legend data-t="fMeal"></legend>
+          <div class="seg">
+            <label><input type="radio" name="meal" value="1"><span data-t="mealYes"></span></label>
+            <label><input type="radio" name="meal" value="0"><span data-t="mealNo"></span></label>
+          </div></fieldset>
+      </div>
+      <input class="hp" type="text" name="website" id="rHp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="consent"><input type="checkbox" id="rConsent"><span data-t="consent"></span></label>
+      <p class="err" id="rErr" role="alert" hidden></p>
+      <button class="btn solid" type="submit" id="rSubmit" data-t="rsvpSubmit"></button>
+    </form>
+    <div class="done" id="rDone" hidden><p id="rDoneText"></p><button type="button" class="link" id="rAgain" data-t="rsvpAgain"></button></div>
+  </section>
+
+  <!-- 방명록 -->
+  <section class="sec" id="guestbook" aria-labelledby="t-gb">
+    <h2 id="t-gb" data-t="gbTitle"></h2>
+    <p class="lead" data-t="gbIntro"></p>
+    <button class="btn solid" type="button" id="gbOpen" aria-expanded="false" aria-controls="gbForm" data-t="gbWrite"></button>
+    <form class="form gbform" id="gbForm" novalidate hidden>
+      <div class="row2">
+        <div class="fld"><label for="gNick" data-t="gbNick"></label><input id="gNick" maxlength="20" autocomplete="nickname"></div>
+        <div class="fld"><label for="gPw" data-t="gbPw"></label><input id="gPw" type="password" maxlength="30" autocomplete="new-password"></div>
+      </div>
+      <div class="fld"><label for="gMsg" data-t="gbMsg"></label><textarea id="gMsg" maxlength="500" rows="4"></textarea><span class="count" id="gCount">0 / 500</span></div>
+      <p class="hint" data-t="gbPwHint"></p>
+      <input class="hp" type="text" name="website" id="gHp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="err" id="gErr" role="alert" hidden></p>
+      <div class="btnrow"><button class="btn line" type="button" id="gCancel" data-t="cancel"></button><button class="btn solid" type="submit" id="gSubmit" data-t="gbSubmit"></button></div>
+    </form>
+    <p class="gb-total" id="gbTotal"></p>
+    <ol class="wall" id="wall" aria-live="polite"></ol>
+    <button class="btn line wide" type="button" id="gbMore" hidden data-t="gbMore"></button>
+  </section>
+
+  <!-- 마음 전하실 곳 -->
+  <section class="sec tint" id="gift" aria-labelledby="t-gift">
+    <h2 id="t-gift" data-t="giftTitle"></h2>
+    <p class="lead" data-t-html="giftIntro"></p>
+    <div class="accts" id="accounts"></div>
+  </section>
+
+  <footer class="foot">
+    <svg class="sprig" viewBox="0 0 24 64" aria-hidden="true"><path d="M12 2v60" /><path d="M12 14c-5-1-8-5-8-9 5 0 8 4 8 9zM12 26c5-1 8-5 8-9-5 0-8 4-8 9zM12 38c-5-1-8-5-8-9 5 0 8 4 8 9zM12 50c5-1 8-5 8-9-5 0-8 4-8 9z"/></svg>
+    <p class="foot-names" id="footNames"></p>
+    <p class="foot-thanks" data-t-html="thanks"></p>
+    <div class="btnrow"><button class="btn ghost" type="button" id="share" data-t="share"></button><button class="btn ghost" type="button" id="copyLink" data-t="copyLink"></button></div>
+  </footer>
+</main>
+
+<!-- 아래 바로가기 -->
+<nav class="dock" id="dock" aria-label="Sections">
+  <a href="#when" data-t="navWhen"></a><a href="#way" data-t="navWay"></a><a href="#rsvp" data-t="navRsvp"></a><a href="#guestbook" data-t="navGb"></a><a href="#gift" data-t="navGift"></a>
+</nav>
+
+<!-- 사진 크게 보기 -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" hidden>
+  <div class="lb-top"><span id="lbCount"></span><button class="lb-btn" id="lbClose" type="button">✕</button></div>
+  <div class="lb-stage" id="lbStage"></div>
+  <div class="lb-nav"><button class="lb-btn" id="lbPrev" type="button">‹</button><button class="lb-btn" id="lbNext" type="button">›</button></div>
+</div>
+
+<!-- 안내 팝업 -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" hidden>
+  <div class="modal-box">
+    <h3 id="mTitle"></h3>
+    <p class="m-body" id="mBody"></p>
+    <input id="mInput" type="password" maxlength="30" hidden autocomplete="off">
+    <p class="err" id="mErr" role="alert" hidden></p>
+    <div class="btnrow"><button type="button" class="btn line" id="mCancel" hidden></button><button type="button" class="btn solid" id="mOk"></button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
