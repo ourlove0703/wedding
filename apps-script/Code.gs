@@ -12,12 +12,13 @@
  *  - 방명록 글 숨기기: '방명록' 시트의 '숨김' 칸에 아무 글자나 입력 (예: o)  → 30초 안에 화면에서 사라짐
  *  - 방명록 글 지우기: 그 행을 통째로 삭제
  *  - 참석 집계: '요약' 시트에 자동 계산
+ *  - 테스트 응답 지우기: '참석응답'·'방명록' 탭에서 2행부터 아래를 행 삭제 ('요약'은 자동으로 0이 됨)
  */
 
 const RSVP = '참석응답';
 const GB = '방명록';
 const SUM = '요약';
-const RSVP_HEAD = ['접수시각', '수정시각', '성함', '연락처', '구분', '참석', '식사', '동행인', '총인원', '언어'];
+const RSVP_HEAD = ['접수시각', '수정시각', '성함', '구분', '참석', '식사', '인원(본인 포함)', '언어', '응답번호'];
 const GB_HEAD = ['번호', '작성시각', '이름', '메시지', '숨김', '비밀번호(암호화)'];
 const CACHE_KEY = 'gb_v1';
 
@@ -27,11 +28,14 @@ function setup() {
   ss.setSpreadsheetTimeZone('Asia/Seoul');
 
   const r = ss.getSheetByName(RSVP) || ss.insertSheet(RSVP);
+  r.getRange(1, 1, 1, r.getMaxColumns()).clearContent();
   r.getRange(1, 1, 1, RSVP_HEAD.length).setValues([RSVP_HEAD]).setFontWeight('bold').setBackground('#ECE8F3');
   r.setFrozenRows(1);
   r.getRange('A:B').setNumberFormat('yyyy-mm-dd hh:mm');
-  r.getRange('D:D').setNumberFormat('@');               // 연락처는 글자로 (앞자리 0 유지)
-  r.setColumnWidths(1, 2, 140); r.setColumnWidth(4, 130);
+  r.getRange('D:D').setNumberFormat('General');
+  r.setColumnWidths(1, 2, 140); r.setColumnWidth(7, 120);
+  r.showColumns(1, Math.min(r.getMaxColumns(), 12));
+  r.hideColumns(9);                                      // 응답번호(같은 휴대폰 구분용)는 숨김
 
   const g = ss.getSheetByName(GB) || ss.insertSheet(GB);
   g.getRange(1, 1, 1, GB_HEAD.length).setValues([GB_HEAD]).setFontWeight('bold').setBackground('#ECE8F3');
@@ -46,11 +50,11 @@ function setup() {
   s.getRange(1, 1, 9, 2).setValues([
     ['항목', '값'],
     ['응답한 사람 수', '=COUNTA(' + R + 'C2:C)'],
-    ['참석 인원 (동행 포함)', '=SUMIFS(' + R + 'I2:I,' + R + 'F2:F,"참석")'],
-    ['  └ 신랑측', '=SUMIFS(' + R + 'I2:I,' + R + 'F2:F,"참석",' + R + 'E2:E,"신랑측")'],
-    ['  └ 신부측', '=SUMIFS(' + R + 'I2:I,' + R + 'F2:F,"참석",' + R + 'E2:E,"신부측")'],
-    ['식사 인원', '=SUMIFS(' + R + 'I2:I,' + R + 'F2:F,"참석",' + R + 'G2:G,"식사함")'],
-    ['불참 응답', '=COUNTIF(' + R + 'F2:F,"불참")'],
+    ['참석 인원 (본인 포함 합계)', '=SUMIFS(' + R + 'G2:G,' + R + 'E2:E,"참석")'],
+    ['  └ 신랑측', '=SUMIFS(' + R + 'G2:G,' + R + 'E2:E,"참석",' + R + 'D2:D,"신랑측")'],
+    ['  └ 신부측', '=SUMIFS(' + R + 'G2:G,' + R + 'E2:E,"참석",' + R + 'D2:D,"신부측")'],
+    ['식사 인원', '=SUMIFS(' + R + 'G2:G,' + R + 'E2:E,"참석",' + R + 'F2:F,"식사함")'],
+    ['불참 응답', '=COUNTIF(' + R + 'E2:E,"불참")'],
     ['방명록 글 수', "=COUNTA('" + GB + "'!A2:A)"],
     ['마지막 갱신', '=NOW()']
   ]);
@@ -95,27 +99,27 @@ function doPost(e) {
 }
 
 function saveRsvp(d) {
-  const name = clip(d.name, 30), phone = clip(d.phone, 20), digits = String(phone).replace(/\D/g, '');
-  if (!name || digits.length < 9 || digits.length > 15) return { ok: false, code: 'invalid' };
+  const name = clip(d.name, 30), rid = clip(d.rid, 40);
+  if (!name) return { ok: false, code: 'invalid' };
   const attend = d.attend === true;
-  const comp = attend ? Math.max(0, Math.min(10, parseInt(d.companions, 10) || 0)) : 0;
+  const count = attend ? Math.max(1, Math.min(20, parseInt(d.count, 10) || 1)) : 0;
   const side = d.side === 'groom' ? '신랑측' : d.side === 'bride' ? '신부측' : '';
   const now = new Date();
   const sh = sheet(RSVP);
-  const row = [name, phone, side, attend ? '참석' : '불참', attend ? (d.meal ? '식사함' : '식사안함') : '', comp, attend ? 1 + comp : 0, d.lang === 'ja' ? '日本語' : '한국어'].map(safe);
+  const row = [name, side, attend ? '참석' : '불참', attend ? (d.meal ? '식사함' : '식사안함') : '', count, d.lang === 'ja' ? '日本語' : '한국어'].map(safe);
 
-  // 같은 연락처로 다시 보내면 새 줄을 만들지 않고 기존 줄을 고칩니다
+  // 같은 휴대폰(응답번호)에서 다시 보내면 새 줄 대신 기존 줄을 고칩니다
   const last = sh.getLastRow();
-  if (last > 1) {
-    const phones = sh.getRange(2, 4, last - 1, 1).getDisplayValues();
-    for (let i = 0; i < phones.length; i++) {
-      if (String(phones[i][0]).replace(/\D/g, '') === digits) {
-        sh.getRange(i + 2, 2, 1, 9).setValues([[now].concat(row)]);
+  if (rid && last > 1) {
+    const ids = sh.getRange(2, 9, last - 1, 1).getValues();
+    for (let i = 0; i < ids.length; i++) {
+      if (String(ids[i][0]) === rid) {
+        sh.getRange(i + 2, 2, 1, 7).setValues([[now].concat(row)]);
         return { ok: true, updated: true };
       }
     }
   }
-  sh.appendRow([now, now].concat(row));
+  sh.appendRow([now, now].concat(row).concat([rid]));
   return { ok: true, updated: false };
 }
 
