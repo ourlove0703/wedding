@@ -10,7 +10,7 @@ window.WEDDING = {
   api: "https://script.google.com/macros/s/AKfycbyFuOoD1cji6ebkOBu1N_R_fIBcKqK9h5APEM0Gz881aPt8_dZpH5jMLFjNlDNfz_KCIQ/exec",
 
   /* ② 청첩장 주소 (GitHub Pages 주소, 끝에 / 포함) — 링크 복사·공유에 쓰입니다 */
-  siteUrl: "https://YOUR-ID.github.io/wedding/",
+  siteUrl: "https://ourlove0703.github.io/wedding/",
 
   date: "2027-07-03", time: "13:10",                        // 한국 시간
 
