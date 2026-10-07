@@ -27,6 +27,21 @@
 </head>
 <body>
 
+<!-- 표지: '청첩장 열기'를 누르면 음악과 함께 열립니다 -->
+<div class="cover" id="cover" role="dialog" aria-modal="true" aria-labelledby="coverNames">
+  <div class="cover-in">
+    <svg class="sprig" viewBox="0 0 24 64" aria-hidden="true"><path d="M12 2v60" /><path d="M12 14c-5-1-8-5-8-9 5 0 8 4 8 9zM12 26c5-1 8-5 8-9-5 0-8 4-8 9zM12 38c-5-1-8-5-8-9 5 0 8 4 8 9zM12 50c5-1 8-5 8-9-5 0-8 4-8 9z"/></svg>
+    <p class="cover-names" id="coverNames"><span id="cvG"></span><span class="cover-and" aria-hidden="true"></span><span id="cvB"></span></p>
+    <p class="cover-date" id="coverDate"></p>
+    <button class="cover-open" id="coverOpen" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+      <span data-t="coverOpen"></span>
+    </button>
+    <p class="cover-hint" data-t="coverHint"></p>
+    <button class="cover-quiet" id="coverQuiet" type="button" data-t="coverQuiet"></button>
+  </div>
+</div>
+
 <!-- 언어 · 음악 -->
 <div class="topbar" id="topbar">
   <div class="lang" role="group" aria-label="Language">
@@ -119,16 +134,13 @@
           <label><input type="radio" name="side" value="groom"><span data-t="groomSide"></span></label>
           <label><input type="radio" name="side" value="bride"><span data-t="brideSide"></span></label>
         </div></fieldset>
-      <div class="row2">
-        <div class="fld"><label for="rName" data-t="fName"></label><input id="rName" maxlength="30" autocomplete="name"></div>
-        <div class="fld"><label for="rPhone" data-t="fPhone"></label><input id="rPhone" type="tel" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="010-0000-0000"></div>
-      </div>
+      <div class="fld"><label for="rName" data-t="fName"></label><input id="rName" maxlength="30" autocomplete="name"></div>
       <div class="more" id="rMore" hidden>
-        <div class="fld"><span class="lbl" id="lComp" data-t="fComp"></span>
-          <div class="stepper" role="group" aria-labelledby="lComp">
-            <button type="button" id="cMinus">−</button><output id="rComp" aria-live="polite">0</output><button type="button" id="cPlus">+</button>
+        <div class="fld"><span class="lbl" id="lCount" data-t="fCount"></span>
+          <div class="stepper" role="group" aria-labelledby="lCount">
+            <button type="button" id="cMinus">−</button><output id="rCount" aria-live="polite">1</output><button type="button" id="cPlus">+</button>
           </div>
-          <p class="hint" data-t="compHint"></p></div>
+          <p class="hint" data-t="countHint"></p></div>
         <fieldset class="fld"><legend data-t="fMeal"></legend>
           <div class="seg">
             <label><input type="radio" name="meal" value="1"><span data-t="mealYes"></span></label>
@@ -136,7 +148,7 @@
           </div></fieldset>
       </div>
       <input class="hp" type="text" name="website" id="rHp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <label class="consent"><input type="checkbox" id="rConsent"><span data-t="consent"></span></label>
+      <p class="hint" data-t="privacy"></p>
       <p class="err" id="rErr" role="alert" hidden></p>
       <button class="btn solid" type="submit" id="rSubmit" data-t="rsvpSubmit"></button>
     </form>
