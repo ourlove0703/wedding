@@ -132,7 +132,7 @@ html[lang="ja"] .bigday{font-size:28px}
 .info div:last-child{border-bottom:1px solid var(--line)}
 html[lang="ja"] .info div{grid-template-columns:96px 1fr}
 .info dt{font-weight:700;font-size:15px;color:var(--violet)}
-.info dd{margin:0;font-size:15px;line-height:1.75}
+.info dd{margin:0;font-size:15px;line-height:1.75;white-space:pre-line}
 .sub + .info{margin-top:0}
 
 /* 폼 */
