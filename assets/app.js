@@ -8,6 +8,7 @@ const p2 = n => String(n).padStart(2, "0");
 /* ═════════ 화면 문구 (한국어 / 일본어) ═════════ */
 const TXT = {
 ko:{
+  coverOpen:"청첩장 열기", coverHint:"배경음악과 함께 열려요", coverQuiet:"음악 없이 볼게요",
   inviteTitle:"소중한 분들을 초대합니다", whenTitle:"예식 일시", galTitle:"우리의 순간", wayTitle:"오시는 길", noticeTitle:"알아두실 것",
   rsvpTitle:"참석 여부를 알려주세요", gbTitle:"축하의 한마디", giftTitle:"마음 전하실 곳",
   navWhen:"일시", navWay:"오시는 길", navRsvp:"참석", navGb:"방명록", navGift:"마음",
@@ -25,15 +26,15 @@ ko:{
   fAttend:"참석 여부", attendYes:"참석할게요", attendNo:"참석이 어려워요",
   fSide:"어느 쪽 하객이신가요?", groomSide:"신랑측", brideSide:"신부측",
   fName:"성함", fPhone:"연락처",
-  fComp:"함께 오시는 분 (본인 제외)", compHint:"아이도 포함해서 세어 주세요.",
+  fCount:"참석 인원 (본인 포함)", countHint:"혼자 오시면 1명 그대로 두시면 돼요. 아이도 함께 세어 주세요.",
   fMeal:"식사", mealYes:"식사할게요", mealNo:"식사는 안 해요",
-  consent:"성함과 연락처는 참석 확인과 식사 준비에만 사용되고, 예식이 끝나면 삭제됩니다. 동의합니다.",
+  privacy:"보내 주신 내용은 참석 확인과 식사 준비에만 사용돼요.",
   rsvpSubmit:"참석 여부 보내기", sending:"보내는 중…", rsvpAgain:"내용 고쳐서 다시 보내기",
-  eAttend:"참석 여부를 골라 주세요.", eSide:"신랑측인지 신부측인지 골라 주세요.", eName:"성함을 입력해 주세요.", ePhone:"연락처를 숫자로 9자리 이상 입력해 주세요.", eMeal:"식사 여부를 골라 주세요.", eConsent:"개인정보 사용에 동의해 주세요.",
+  eAttend:"참석 여부를 골라 주세요.", eSide:"신랑측인지 신부측인지 골라 주세요.", eName:"성함을 입력해 주세요.", eMeal:"식사 여부를 골라 주세요.",
   thxYesT:"고맙습니다", thxYes:"참석 여부를 전달했어요.<br>그날 반갑게 만나요.",
   thxNoT:"마음 고맙습니다", thxNo:"알려 주셔서 고맙습니다.<br>멀리서도 축복해 주세요.",
   updated:"이미 보내 주신 내용을 새로 고쳤어요.",
-  doneYes:(n,k)=>`${n}님${k?` 외 ${k}명`:""}, 참석으로 전달했어요.`, doneNo:n=>`${n}님, 불참으로 전달했어요. 마음 고맙습니다.`,
+  doneYes:(n,k)=>`${n}님${k>1?` 포함 ${k}명`:""}, 참석으로 전달했어요.`, doneNo:n=>`${n}님, 불참으로 전달했어요. 마음 고맙습니다.`,
   gbIntro:"두 사람에게 축하 메시지를 남겨 주세요. 로그인 없이 바로 쓸 수 있어요.",
   gbWrite:"축하 메시지 쓰기", gbNick:"이름", gbPw:"비밀번호", gbMsg:"메시지", gbPwHint:"비밀번호는 나중에 글을 지울 때 필요해요. (4자 이상)",
   gbSubmit:"메시지 남기기", gbMore:"메시지 더 보기", gbTotal:n=>`축하 메시지 ${n}개`, gbEmpty:"아직 메시지가 없어요. 첫 축하를 남겨 주세요.",
@@ -48,6 +49,7 @@ ko:{
   music:["배경음악 켜기","배경음악 끄기"], view:"크게 보기", close:"닫기", prev:"이전 사진", next:"다음 사진", minus:"한 명 줄이기", plus:"한 명 늘리기"
 },
 ja:{
+  coverOpen:"招待状を開く", coverHint:"BGMとともに開きます", coverQuiet:"音楽なしで見る",
   inviteTitle:"ご招待", whenTitle:"日時", galTitle:"ギャラリー", wayTitle:"アクセス", noticeTitle:"ご案内",
   rsvpTitle:"ご出欠のお知らせ", gbTitle:"お祝いメッセージ", giftTitle:"お祝いのお振込先",
   navWhen:"日時", navWay:"アクセス", navRsvp:"ご出欠", navGb:"メッセージ", navGift:"お振込先",
@@ -65,15 +67,15 @@ ja:{
   fAttend:"ご出欠", attendYes:"出席します", attendNo:"欠席します",
   fSide:"ご関係", groomSide:"新郎側", brideSide:"新婦側",
   fName:"お名前", fPhone:"電話番号",
-  fComp:"同伴者（ご本人を除く）", compHint:"お子様も含めてお数えください。",
+  fCount:"ご出席人数（ご本人を含む）", countHint:"お一人の場合は1名のままで大丈夫です。お子様も含めてお数えください。",
   fMeal:"お食事", mealYes:"いただきます", mealNo:"いただきません",
-  consent:"お名前と電話番号は出欠確認とお食事の準備にのみ使用し、挙式後に削除します。同意します。",
+  privacy:"いただいた内容は出欠確認とお食事の準備にのみ使用します。",
   rsvpSubmit:"出欠を送信する", sending:"送信中…", rsvpAgain:"内容を修正して再送信",
-  eAttend:"ご出欠を選んでください。", eSide:"新郎側か新婦側かを選んでください。", eName:"お名前を入力してください。", ePhone:"電話番号を9桁以上の数字で入力してください。", eMeal:"お食事の有無を選んでください。", eConsent:"個人情報の利用に同意してください。",
+  eAttend:"ご出欠を選んでください。", eSide:"新郎側か新婦側かを選んでください。", eName:"お名前を入力してください。", eMeal:"お食事の有無を選んでください。",
   thxYesT:"ありがとうございます", thxYes:"ご出席のご連絡を承りました。<br>当日お会いできるのを楽しみにしています。",
   thxNoT:"ありがとうございます", thxNo:"お知らせいただきありがとうございます。<br>遠くからお祝いいただけましたら幸いです。",
   updated:"以前の送信内容を更新しました。",
-  doneYes:(n,k)=>`${n}様${k?`ほか${k}名`:""}、ご出席を承りました。`, doneNo:n=>`${n}様、ご欠席を承りました。お心遣いありがとうございます。`,
+  doneYes:(n,k)=>`${n}様${k>1?`（${k}名）`:""}、ご出席を承りました。`, doneNo:n=>`${n}様、ご欠席を承りました。お心遣いありがとうございます。`,
   gbIntro:"ふたりへのお祝いメッセージをお寄せください。ログイン不要です。",
   gbWrite:"メッセージを書く", gbNick:"お名前", gbPw:"パスワード", gbMsg:"メッセージ", gbPwHint:"パスワードは書き込みを削除するときに必要です。（4文字以上）",
   gbSubmit:"メッセージを送る", gbMore:"もっと見る", gbTotal:n=>`お祝いメッセージ ${n}件`, gbEmpty:"まだメッセージはありません。最初のお祝いをどうぞ。",
@@ -111,6 +113,8 @@ function render(){
   // 첫 화면
   $("hG").textContent = pick(G); $("hB").textContent = pick(B);
   $("heroNames").setAttribute("aria-label", `${pick(G)}, ${pick(B)}`);
+  $("cvG").textContent = pick(G); $("cvB").textContent = pick(B);
+  $("coverDate").textContent = `${t("day")(Y, Mo, D, t("dow")[DOW])} ${t("time")(hh, mm)}`;
   const w = t("dow")[DOW];
   $("heroWhen").innerHTML = `${esc(t("day")(Y, Mo, D, w))}<span>${esc(t("time")(hh, mm))}</span>`;
   $("heroWhere").innerHTML = `${esc(pick(C.place.name))}${L === "ja" ? "<br>" : " "}${esc(pick(C.place.hall))}`;
@@ -219,14 +223,32 @@ let sx = null;
 lb.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
 lb.addEventListener("touchend", e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) showLB(cur + (dx < 0 ? 1 : -1)); sx = null; });
 
-/* ═════════ 배경음악 (버튼을 누를 때만 재생) ═════════ */
+/* ═════════ 표지 · 배경음악 ═════════
+   휴대폰 브라우저는 소리 자동재생을 막기 때문에, 표지의 '청첩장 열기'를 누르는 순간 음악을 시작합니다. */
 const bgm = new Audio(); bgm.preload = "none";
 function setBgm(on){ const b = $("bgm"); b.setAttribute("aria-pressed", on); b.setAttribute("aria-label", t("music")[on ? 1 : 0]); }
+function playBgm(){ if (!C.music) return; if (!bgm.src) bgm.src = C.music; bgm.play().catch(() => {}); }
 if (C.music){
   $("bgm").hidden = false;
-  $("bgm").onclick = () => { if (!bgm.src) bgm.src = C.music; bgm.paused ? bgm.play().catch(() => {}) : bgm.pause(); };
+  $("bgm").onclick = () => { bgm.paused ? playBgm() : bgm.pause(); };
   bgm.addEventListener("play", () => setBgm(true)); bgm.addEventListener("pause", () => setBgm(false));
+} else {
+  document.querySelectorAll(".cover-hint,#coverQuiet").forEach(el => el.remove());
 }
+(function(){
+  const cover = $("cover");
+  // 바로가기 링크(#rsvp 등)로 들어온 경우에도 표지는 한 번 보여 줍니다
+  document.documentElement.classList.add("covered");
+  const open = withMusic => {
+    if (withMusic) playBgm();
+    cover.classList.add("leaving");
+    document.documentElement.classList.remove("covered");
+    const done = () => { cover.hidden = true; };
+    matchMedia("(prefers-reduced-motion: reduce)").matches ? done() : setTimeout(done, 650);
+  };
+  $("coverOpen").onclick = () => open(true);
+  $("coverQuiet") && ($("coverQuiet").onclick = () => open(false));
+})();
 
 /* ═════════ 상단 버튼 숨김 · 아래 바로가기 ═════════ */
 (function(){
@@ -300,7 +322,7 @@ function demo(action, d){
   db.rsvp = db.rsvp || []; db.gb = db.gb || []; db.seq = db.seq || 0;
   const save = () => { try { localStorage.setItem(K, JSON.stringify(db)); } catch(e){} };
   return new Promise(res => setTimeout(() => {
-    if (action === "rsvp"){ const k = d.phone.replace(/\D/g, ""); const i = db.rsvp.findIndex(r => r.k === k); const row = { ...d, k };
+    if (action === "rsvp"){ const k = d.rid; const i = db.rsvp.findIndex(r => r.k === k); const row = { ...d, k };
       if (i >= 0) db.rsvp[i] = row; else db.rsvp.push(row); save(); res({ ok: true, updated: i >= 0 }); }
     else if (action === "gb_add"){ const it = { id: ++db.seq, name: d.name, message: d.message, created_at: new Date().toISOString(), pw: d.password }; db.gb.unshift(it); save();
       res({ ok: true, item: { id: it.id, name: it.name, message: it.message, created_at: it.created_at } }); }
@@ -315,43 +337,37 @@ function demo(action, d){
 /* ═════════ 참석 여부 ═════════ */
 const SAVED = "wd_rsvp_done";
 let rsvpDone = null; try { rsvpDone = JSON.parse(localStorage.getItem(SAVED) || "null"); } catch(e){}
+// 이 휴대폰의 응답 번호: 같은 휴대폰에서 다시 보내면 시트의 기존 줄을 고칩니다
+let RID = ""; try { RID = localStorage.getItem("wd_rid") || ""; } catch(e){}
+if (!RID){ RID = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); try { localStorage.setItem("wd_rid", RID); } catch(e){} }
 const checked = n => { const e = document.querySelector(`#rsvpForm input[name="${n}"]:checked`); return e ? e.value : null; };
-let comp = 0;
-function setComp(n){ comp = Math.max(0, Math.min(10, n)); $("rComp").textContent = comp; $("cMinus").disabled = comp <= 0; $("cPlus").disabled = comp >= 10; }
+let count = 1;
+function setCount(n){ count = Math.max(1, Math.min(10, n)); $("rCount").textContent = count; $("cMinus").disabled = count <= 1; $("cPlus").disabled = count >= 10; }
 function renderRsvpDone(){
   $("rsvpForm").hidden = !!rsvpDone; $("rDone").hidden = !rsvpDone;
-  if (rsvpDone) $("rDoneText").textContent = rsvpDone.attend ? t("doneYes")(rsvpDone.name, rsvpDone.companions) : t("doneNo")(rsvpDone.name);
+  if (rsvpDone) $("rDoneText").textContent = rsvpDone.attend ? t("doneYes")(rsvpDone.name, rsvpDone.count || 1) : t("doneNo")(rsvpDone.name);
 }
-function formatPhone(v){
-  if (v.trim().startsWith("+") || /[^\d\-\s]/.test(v)) return v;
-  const d = v.replace(/\D/g, "").slice(0, 11);
-  if (d.length < 4) return d;
-  if (d.length < 8) return d.slice(0, 3) + "-" + d.slice(3);
-  if (d.length < 11 && !d.startsWith("010")) return d.slice(0, 3) + "-" + d.slice(3, 6) + "-" + d.slice(6);
-  return d.slice(0, 3) + "-" + d.slice(3, 7) + "-" + d.slice(7);
-}
-setComp(0);
-$("cMinus").onclick = () => setComp(comp - 1);
-$("cPlus").onclick = () => setComp(comp + 1);
+setCount(1);
+$("rsvpForm").addEventListener("input", () => showErr($("rErr"), ""));
+$("rsvpForm").addEventListener("change", () => showErr($("rErr"), ""));
+$("cMinus").onclick = () => setCount(count - 1);
+$("cPlus").onclick = () => setCount(count + 1);
 document.querySelectorAll('#rsvpForm input[name="attend"]').forEach(r => r.addEventListener("change", () => { $("rMore").hidden = checked("attend") !== "1"; }));
-$("rPhone").addEventListener("input", e => { const v = formatPhone(e.target.value); if (v !== e.target.value) e.target.value = v; });
 $("rAgain").onclick = () => { rsvpDone = null; try { localStorage.removeItem(SAVED); } catch(e){} renderRsvpDone(); $("rName").focus(); };
 $("rsvpForm").addEventListener("submit", async e => {
   e.preventDefault();
   const err = $("rErr"), btn = $("rSubmit");
   const attend = checked("attend"), side = checked("side"), meal = checked("meal");
-  const name = $("rName").value.trim(), phone = $("rPhone").value.trim(), digits = phone.replace(/\D/g, "");
+  const name = $("rName").value.trim();
   if (attend === null) return showErr(err, t("eAttend"));
   if (side === null) return showErr(err, t("eSide"));
   if (!name) return showErr(err, t("eName"));
-  if (digits.length < 9 || digits.length > 15) return showErr(err, t("ePhone"));
   if (attend === "1" && meal === null) return showErr(err, t("eMeal"));
-  if (!$("rConsent").checked) return showErr(err, t("eConsent"));
   showErr(err, ""); btn.disabled = true; btn.textContent = t("sending");
   try {
-    const yes = attend === "1";
-    const r = await call("rsvp", { name, phone, side, attend: yes, meal: yes && meal === "1", companions: yes ? comp : 0, lang: L, website: $("rHp").value });
-    rsvpDone = { name, attend: yes, companions: yes ? comp : 0 };
+    const yes = attend === "1", n = yes ? count : 0;
+    const r = await call("rsvp", { rid: RID, name, side, attend: yes, meal: yes && meal === "1", count: n, lang: L, website: $("rHp").value });
+    rsvpDone = { name, attend: yes, count: n };
     try { localStorage.setItem(SAVED, JSON.stringify(rsvpDone)); } catch(e){}
     openModal({ title: t(yes ? "thxYesT" : "thxNoT"), body: t(yes ? "thxYes" : "thxNo") + (r.updated ? `<br><br>${t("updated")}` : "") });
     renderRsvpDone();
