@@ -177,22 +177,6 @@ function tick(){
 }
 setInterval(tick, 60000);
 
-/* ═════════ 캘린더 저장 ═════════ */
-(function(){
-  const z = d => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-  const end = new Date(+WED + 2 * 36e5);
-  const title = `${G.ko} ♥ ${B.ko} 결혼식`, loc = `${C.place.name.ko} ${C.place.hall.ko}, ${C.place.address.ko}`;
-  $("gcal").href = "https://calendar.google.com/calendar/render?" + new URLSearchParams({ action: "TEMPLATE", text: title, dates: `${z(WED)}/${z(end)}`, location: loc });
-  $("ics").onclick = () => {
-    const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//wedding//KO", "BEGIN:VEVENT", `UID:${z(WED)}-wedding`, `DTSTAMP:${z(new Date())}`,
-      `DTSTART:${z(WED)}`, `DTEND:${z(end)}`, `SUMMARY:${title}`, `LOCATION:${loc.replace(/,/g, "\\,")}`, `URL:${siteUrl()}`,
-      "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", `DESCRIPTION:${title}`, "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
-    const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
-    const a = document.createElement("a"); a.href = url; a.download = "wedding.ics"; document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
-  };
-})();
-
 /* ═════════ 사진 ═════════ */
 $("heroImg").src = C.photos.main;
 $("heroImg").alt = `${G.ko} ${B.ko}`;
