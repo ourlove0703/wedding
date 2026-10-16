@@ -109,15 +109,27 @@ html[lang="ja"] .bigday{font-size:28px}
 .btn.wide{width:100%;margin-top:18px}
 .link{background:none;border:0;padding:8px 0;color:var(--violet);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--bloom);cursor:pointer;font-size:14.5px}
 
-/* 갤러리: 사진 비율 그대로 옆으로 넘기기 */
-.gal-sec{padding-inline:0}
-.gal-sec h2{padding-inline:24px}
-.strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 24px 6px;scroll-padding-inline:24px;scrollbar-width:none;overscroll-behavior-x:contain}
-.strip::-webkit-scrollbar{display:none}
-.shot{flex:none;height:360px;border:0;padding:0;border-radius:var(--r-s);overflow:hidden;scroll-snap-align:start;cursor:zoom-in;background:var(--lilac)}
-.shot img{height:100%;width:auto;max-width:min(340px,calc(100vw - 72px));object-fit:cover}
-.strip-foot{display:flex;justify-content:space-between;align-items:baseline;padding:14px 24px 0;font-size:13.5px;color:var(--mute)}
-.strip-count{font-family:var(--serif);font-weight:700;color:var(--violet);font-size:15px}
+/* 갤러리: 작은 액자 6장(3×2) → 누르면 크게, '전체 보기'는 액자 모음 */
+.grid6,.album-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.shot{position:relative;display:block;width:100%;aspect-ratio:3/4;border:0;padding:0;border-radius:6px;overflow:hidden;cursor:zoom-in;background:var(--lilac)}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.shot:hover img{transform:scale(1.04)}
+.shot.shot-all{cursor:pointer}
+.shot.shot-all::after{content:"";position:absolute;inset:0;background:rgba(43,40,51,.55)}
+.more-n{position:absolute;inset:0;z-index:1;display:grid;place-items:center;align-content:center;gap:2px;color:#fff;font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.2}
+.more-n small{font-family:var(--sans);font-weight:400;font-size:12px;opacity:.9}
+.gal-hint{margin-top:12px;font-size:13.5px;color:var(--mute);text-align:center}
+.gal-more{margin-top:14px;text-align:center}
+.gal-more .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:200px;padding-inline:28px;white-space:nowrap}
+.gal-n{font-family:var(--serif);font-weight:700}
+
+/* 사진 전체 보기 (액자 모음) */
+.album{position:fixed;inset:0;z-index:35;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;animation:fade .2s ease;padding:0 12px calc(24px + env(safe-area-inset-bottom,0px))}
+.album-top{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;margin:0 -12px 10px;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px 20px;background:rgba(247,246,249,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.album-top h3{margin:0;font-family:var(--serif);font-weight:700;font-size:18px;color:var(--violet)}
+.album-top small{font-family:var(--sans);font-weight:400;font-size:14px;color:var(--mute);margin-left:4px}
+.al-btn{background:transparent;border:1px solid var(--line);color:var(--violet);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:17px;line-height:1}
+.album-grid{max-width:520px;margin:0 auto}
 
 /* 오시는 길 */
 .hall-photo{margin:0 0 26px;border-radius:var(--r-l) var(--r-l) var(--r-l) 4px;overflow:hidden;background:var(--lilac);aspect-ratio:3/2}
@@ -245,8 +257,18 @@ html[lang="ja"] .dock a{font-size:12px}
 .lightbox{position:fixed;inset:0;z-index:40;background:#17141D;display:grid;grid-template-rows:auto 1fr auto;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(18px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain}
 .lb-top{display:flex;justify-content:space-between;align-items:center;color:#D9D1EA;padding:4px 6px;font-size:15px}
 .lb-stage{position:relative;min-height:0;margin:8px 0}
+.lb-stage{overflow:hidden;touch-action:pan-y}
 .lb-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;max-width:none}
-.lb-nav{display:flex;justify-content:center;gap:14px}
+.lb-stage img.in-r{animation:inR .28s cubic-bezier(.2,.8,.2,1)}
+.lb-stage img.in-l{animation:inL .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes inR{from{opacity:0;transform:translateX(40px)}}
+@keyframes inL{from{opacity:0;transform:translateX(-40px)}}
+.lb-right{display:flex;align-items:center;gap:8px}
+.lb-all{background:transparent;border:1px solid rgba(217,209,234,.4);color:#EDE8F6;height:36px;padding:0 14px;border-radius:999px;cursor:pointer;font-size:13.5px}
+/* ‹ › 는 사진 양옆 가운데, 맨 아래는 인사 문구 */
+.lb-nav{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;padding:0 10px;pointer-events:none;z-index:1}
+.lb-nav .lb-btn{pointer-events:auto;background:rgba(23,20,29,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.lb-msg{margin:6px auto 0;max-width:22em;padding:0 16px;text-align:center;font-family:var(--serif);font-size:15px;line-height:1.7;color:#D9D1EA;letter-spacing:-.01em}
 .lb-btn{background:transparent;border:1px solid rgba(217,209,234,.4);color:#EDE8F6;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1}
 
 /* 팝업 · 알림 */
@@ -267,7 +289,6 @@ html[lang="ja"] .dock a{font-size:12px}
   .hero{grid-template-columns:60px 1fr;padding-right:16px}
   .bigday{font-size:30px}
   .row2{grid-template-columns:1fr}
-  .shot{height:300px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}

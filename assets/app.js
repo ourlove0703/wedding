@@ -18,7 +18,8 @@ ko:{
   calHead:(y,m)=>`${y}년 ${m}월`,
   dday:n=> n>0?`결혼식까지 <b class="num">${n}일</b> 남았어요`: n===0?`오늘, 저희 결혼합니다`:`결혼한 지 <b class="num">${-n}일</b>째예요`,
   gcal:"구글 캘린더에 저장", ics:"휴대폰 캘린더에 저장",
-  galHint:"옆으로 넘기고, 누르면 크게 보여요",
+  galHint:"사진을 누르면 크게 보고, 옆으로 넘겨 볼 수 있어요", galAll:"사진 전체 보기", galAllShort:"전체", galMore:"더 보기",
+  lbMsg:"저희 두 사람, 소중한 당신의 축복 속에 시작하고 싶습니다.",
   father:"아버지", mother:"어머니", rel:(f,m,o)=>`${f} · ${m}의 ${o}`, todo:"확인 필요",
   kakao:"카카오맵", naver:"네이버 지도", google:"구글 지도", copyAddr:"주소 복사", taxi:"",
   rsvpIntro:"식사와 자리를 준비할 수 있도록<br>참석 여부를 미리 알려 주세요.",
@@ -59,7 +60,8 @@ ja:{
   calHead:(y,m)=>`${y}年${m}月`,
   dday:n=> n>0?`結婚式まで あと<b class="num">${n}日</b>`: n===0?`本日、わたしたちは結婚します`:`結婚して <b class="num">${-n}日</b>目`,
   gcal:"Google カレンダーに登録", ics:"スマホのカレンダーに登録",
-  galHint:"横にスワイプ・タップで拡大",
+  galHint:"タップで拡大・スワイプで次の写真へ", galAll:"すべての写真を見る", galAllShort:"一覧", galMore:"もっと見る",
+  lbMsg:"大切な皆さまの祝福の中で、ふたりの新しい一歩を踏み出したいと思います。",
   father:"父", mother:"母", rel:(f,m,o)=>`${f}、${m}の${o}`, todo:"確認中",
   kakao:"カカオマップ", naver:"NAVER Map", google:"Google マップ", copyAddr:"住所をコピー", taxi:"タクシーでは運転手の方に下の韓国語住所をお見せください",
   rsvpIntro:"お食事とお席のご準備のため<br>ご出欠を事前にお知らせください。",
@@ -164,7 +166,10 @@ function render(){
   document.title = L === "ja" ? `${G.ja} ♥ ${B.ja} 結婚式のご案内` : `${G.ko} ♥ ${B.ko} 결혼합니다`;
 
   // 접근성 라벨
-  document.querySelectorAll(".shot").forEach((b, i) => b.setAttribute("aria-label", `${i + 1} ${t("view")}`));
+  document.querySelectorAll(".shot[data-i]").forEach(b => b.setAttribute("aria-label", `${+b.dataset.i + 1} ${t("view")}`));
+  document.querySelectorAll(".shot.shot-all").forEach(b => b.setAttribute("aria-label", `${t("galAll")} (${GAL.length})`));
+  document.querySelectorAll(".more-n small").forEach(s => s.textContent = t("galMore"));
+  $("albumClose").setAttribute("aria-label", t("close"));
   $("lbClose").setAttribute("aria-label", t("close")); $("lbPrev").setAttribute("aria-label", t("prev")); $("lbNext").setAttribute("aria-label", t("next"));
   $("cMinus").setAttribute("aria-label", t("minus")); $("cPlus").setAttribute("aria-label", t("plus"));
   setBgm(!bgm.paused);
@@ -181,31 +186,63 @@ setInterval(tick, 60000);
 $("heroImg").src = C.photos.main;
 $("heroImg").alt = `${G.ko} ${B.ko}`;
 const GAL = C.photos.gallery;
-$("strip").innerHTML = GAL.map((src, i) => `<button class="shot" type="button" data-i="${i}"><img src="${esc(src)}" alt="" loading="lazy" decoding="async"></button>`).join("");
-function stripIndex(){
-  const st = $("strip"), x = st.scrollLeft + 24; let best = 0, bd = Infinity;
-  st.querySelectorAll(".shot").forEach((s, i) => { const d = Math.abs(s.offsetLeft - x); if (d < bd){ bd = d; best = i; } });
-  if (st.scrollLeft > 0 && st.scrollLeft + st.clientWidth >= st.scrollWidth - 4) best = GAL.length - 1;
-  $("stripCount").textContent = `${best + 1} / ${GAL.length}`;
-}
-$("strip").addEventListener("scroll", () => requestAnimationFrame(stripIndex), { passive: true });
-stripIndex();
+/* 갤러리: 앞의 6장만 작은 액자로 — 사진이 7장 이상이면 6번째 칸은 '+N 더 보기'
+   사진은 config.js 의 gallery 목록 순서대로 나옵니다 (대표로 보일 6장을 앞에 두세요) */
+const SHOW = 6, EXTRA = GAL.length - SHOW;
+const tile = (src, i, lazy = true) => `<button class="shot" type="button" data-i="${i}"><img src="${esc(src)}" alt=""${lazy ? ' loading="lazy"' : ""} decoding="async"></button>`;
+$("grid6").innerHTML = GAL.slice(0, SHOW).map((src, i) => (i === SHOW - 1 && EXTRA > 0)
+  ? `<button class="shot shot-all" type="button" data-all><img src="${esc(src)}" alt="" loading="lazy" decoding="async"><span class="more-n">+${EXTRA + 1}<small></small></span></button>`
+  : tile(src, i)).join("");
+$("galTotal").textContent = `(${GAL.length})`;
+$("albumCount").textContent = GAL.length;
+$("galAll").parentElement.hidden = GAL.length <= SHOW;
 
-const lb = $("lightbox"); let cur = 0, lastFocus = null;
-function showLB(i){
-  cur = (i + GAL.length) % GAL.length;
-  $("lbStage").innerHTML = ""; const im = new Image(); im.src = GAL[cur]; im.alt = ""; $("lbStage").appendChild(im);
-  $("lbCount").textContent = `${cur + 1} / ${GAL.length}`;
+/* 사진 전체 보기 (액자 모음) */
+const album = $("album"); let albumFocus = null, albumBuilt = false;
+function openAlbum(){
+  if (!albumBuilt){ $("albumGrid").innerHTML = GAL.map((src, i) => tile(src, i)).join(""); albumBuilt = true;
+    $("albumGrid").querySelectorAll(".shot").forEach(b => b.setAttribute("aria-label", `${+b.dataset.i + 1} ${t("view")}`)); }
+  albumFocus = document.activeElement; album.hidden = false; album.scrollTop = 0;
+  document.body.style.overflow = "hidden"; $("albumClose").focus();
 }
+function closeAlbum(){ album.hidden = true; document.body.style.overflow = ""; albumFocus && albumFocus.focus(); }
+$("galAll").onclick = openAlbum; $("albumClose").onclick = closeAlbum;
+
+/* 사진 크게 보기 — 옆으로 밀거나 ‹ › 로 넘기기 */
+const lb = $("lightbox"); let cur = 0, lastFocus = null;
+function showLB(i, dir = 0){
+  cur = (i + GAL.length) % GAL.length;
+  const im = new Image(); im.src = GAL[cur]; im.alt = ""; if (dir) im.className = dir > 0 ? "in-r" : "in-l";
+  $("lbStage").replaceChildren(im);
+  $("lbCount").textContent = `${cur + 1} / ${GAL.length}`;
+  [cur + 1, cur - 1].forEach(j => { new Image().src = GAL[(j + GAL.length) % GAL.length]; });   // 다음·이전 사진 미리 받아 두기
+}
+const go = d => showLB(cur + d, d);
 function openLB(i){ lastFocus = document.activeElement; showLB(i); lb.hidden = false; document.body.style.overflow = "hidden"; $("lbClose").focus(); }
-function closeLB(){ lb.hidden = true; document.body.style.overflow = ""; lastFocus && lastFocus.focus(); }
-$("strip").addEventListener("click", e => { const b = e.target.closest(".shot"); if (b) openLB(+b.dataset.i); });
-$("lbClose").onclick = closeLB; $("lbPrev").onclick = () => showLB(cur - 1); $("lbNext").onclick = () => showLB(cur + 1);
+function closeLB(){ lb.hidden = true; if (album.hidden) document.body.style.overflow = ""; lastFocus && lastFocus.focus(); }
+document.addEventListener("click", e => {
+  const b = e.target.closest(".shot"); if (!b) return;
+  if (b.hasAttribute("data-all")) openAlbum(); else openLB(+b.dataset.i);
+});
+$("lbAll").onclick = () => {   // 크게 보던 사진에서 '전체'로 돌아가기
+  lb.hidden = true; if (album.hidden) openAlbum();
+  const s = $("albumGrid").querySelector(`[data-i="${cur}"]`); if (s){ s.scrollIntoView({ block: "center" }); s.focus({ preventScroll: true }); }
+};
+$("lbClose").onclick = closeLB; $("lbPrev").onclick = () => go(-1); $("lbNext").onclick = () => go(1);
 lb.addEventListener("click", e => { if (e.target === lb || e.target === $("lbStage")) closeLB(); });
-document.addEventListener("keydown", e => { if (lb.hidden) return; if (e.key === "Escape") closeLB(); if (e.key === "ArrowLeft") showLB(cur - 1); if (e.key === "ArrowRight") showLB(cur + 1); });
-let sx = null;
-lb.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
-lb.addEventListener("touchend", e => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) showLB(cur + (dx < 0 ? 1 : -1)); sx = null; });
+document.addEventListener("keydown", e => {
+  if (!lb.hidden){ if (e.key === "Escape") closeLB(); if (e.key === "ArrowLeft") go(-1); if (e.key === "ArrowRight") go(1); return; }
+  if (!album.hidden && e.key === "Escape") closeAlbum();
+});
+let sx = null, sy = null;
+lb.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+lb.addEventListener("touchend", e => {
+  if (sx === null) return;
+  const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+  if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? 1 : -1);
+  else if (dy > 90 && Math.abs(dy) > Math.abs(dx) * 1.5) closeLB();   // 아래로 쓸어내리면 닫기
+  sx = sy = null;
+});
 
 /* ═════════ 표지 · 배경음악 ═════════
    휴대폰 브라우저는 소리 자동재생을 막기 때문에, 표지의 '청첩장 열기'를 누르는 순간 음악을 시작합니다. */
