@@ -268,7 +268,8 @@ html[lang="ja"] .dock a{font-size:12px}
 /* ‹ › 는 사진 양옆 가운데, 맨 아래는 인사 문구 */
 .lb-nav{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;padding:0 10px;pointer-events:none;z-index:1}
 .lb-nav .lb-btn{pointer-events:auto;background:rgba(23,20,29,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.lb-msg{margin:6px auto 0;max-width:22em;padding:0 16px;text-align:center;font-family:var(--serif);font-size:15px;line-height:1.7;color:#D9D1EA;letter-spacing:-.01em}
+.lb-msg{margin:6px auto 0;padding:0 8px;text-align:center;font-family:var(--serif);font-size:clamp(13px,3.8vw,15px);line-height:1.7;color:#D9D1EA;letter-spacing:-.01em}
+.lb-msg span{display:block;white-space:nowrap}
 .lb-btn{background:transparent;border:1px solid rgba(217,209,234,.4);color:#EDE8F6;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1}
 
 /* 팝업 · 알림 */

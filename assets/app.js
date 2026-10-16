@@ -19,7 +19,7 @@ ko:{
   dday:n=> n>0?`결혼식까지 <b class="num">${n}일</b> 남았어요`: n===0?`오늘, 저희 결혼합니다`:`결혼한 지 <b class="num">${-n}일</b>째예요`,
   gcal:"구글 캘린더에 저장", ics:"휴대폰 캘린더에 저장",
   galHint:"사진을 누르면 크게 보고, 옆으로 넘겨 볼 수 있어요", galAll:"사진 전체 보기", galAllShort:"전체", galMore:"더 보기",
-  lbMsg:"저희 두 사람, 소중한 당신의 축복 속에 시작하고 싶습니다.",
+  lbMsg:"<span>저희 두 사람,</span><span>소중한 당신의 축복 속에 시작하고 싶습니다.</span>",   // <span> 하나가 한 줄
   father:"아버지", mother:"어머니", rel:(f,m,o)=>`${f} · ${m}의 ${o}`, todo:"확인 필요",
   kakao:"카카오맵", naver:"네이버 지도", google:"구글 지도", copyAddr:"주소 복사", taxi:"",
   rsvpIntro:"식사와 자리를 준비할 수 있도록<br>참석 여부를 미리 알려 주세요.",
@@ -61,7 +61,7 @@ ja:{
   dday:n=> n>0?`結婚式まで あと<b class="num">${n}日</b>`: n===0?`本日、わたしたちは結婚します`:`結婚して <b class="num">${-n}日</b>目`,
   gcal:"Google カレンダーに登録", ics:"スマホのカレンダーに登録",
   galHint:"タップで拡大・スワイプで次の写真へ", galAll:"すべての写真を見る", galAllShort:"一覧", galMore:"もっと見る",
-  lbMsg:"大切な皆さまの祝福の中で、ふたりの新しい一歩を踏み出したいと思います。",
+  lbMsg:"<span>大切な皆さまの祝福の中で、</span><span>ふたりの新しい一歩を踏み出したいと思います。</span>",
   father:"父", mother:"母", rel:(f,m,o)=>`${f}、${m}の${o}`, todo:"確認中",
   kakao:"カカオマップ", naver:"NAVER Map", google:"Google マップ", copyAddr:"住所をコピー", taxi:"タクシーでは運転手の方に下の韓国語住所をお見せください",
   rsvpIntro:"お食事とお席のご準備のため<br>ご出欠を事前にお知らせください。",
