@@ -98,8 +98,10 @@
   <!-- 갤러리 -->
   <section class="sec gal-sec" id="gallery" aria-labelledby="t-gal">
     <h2 id="t-gal" data-t="galTitle"></h2>
-    <div class="strip" id="strip" tabindex="0" aria-roledescription="carousel"></div>
-    <div class="strip-foot"><span class="strip-count" id="stripCount"></span><span data-t="galHint"></span></div>
+    <!-- 앞의 6장만 액자로 보여 주고, 나머지는 '사진 전체 보기'에서 -->
+    <div class="grid6" id="grid6"></div>
+    <p class="gal-hint" data-t="galHint"></p>
+    <div class="gal-more"><button class="btn line" type="button" id="galAll"><span data-t="galAll"></span> <span class="gal-n" id="galTotal"></span></button></div>
   </section>
 
   <!-- 오시는 길 -->
@@ -194,11 +196,18 @@
   <a href="#when" data-t="navWhen"></a><a href="#way" data-t="navWay"></a><a href="#rsvp" data-t="navRsvp"></a><a href="#guestbook" data-t="navGb"></a><a href="#gift" data-t="navGift"></a>
 </nav>
 
+<!-- 사진 전체 보기 (액자 모음) -->
+<div class="album" id="album" role="dialog" aria-modal="true" aria-labelledby="albumTitle" hidden>
+  <div class="album-top"><h3 id="albumTitle"><span data-t="galTitle"></span> <small id="albumCount"></small></h3><button class="al-btn" id="albumClose" type="button">✕</button></div>
+  <div class="album-grid" id="albumGrid"></div>
+</div>
+
 <!-- 사진 크게 보기 -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" hidden>
-  <div class="lb-top"><span id="lbCount"></span><button class="lb-btn" id="lbClose" type="button">✕</button></div>
+  <div class="lb-top"><span id="lbCount"></span><span class="lb-right"><button class="lb-all" id="lbAll" type="button" data-t="galAllShort"></button><button class="lb-btn" id="lbClose" type="button">✕</button></span></div>
   <div class="lb-stage" id="lbStage"></div>
   <div class="lb-nav"><button class="lb-btn" id="lbPrev" type="button">‹</button><button class="lb-btn" id="lbNext" type="button">›</button></div>
+  <p class="lb-msg" data-t="lbMsg"></p>
 </div>
 
 <!-- 안내 팝업 -->
