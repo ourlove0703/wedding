@@ -16,7 +16,7 @@ ko:{
   day:(y,m,d,w)=>`${y}년 ${m}월 ${d}일 ${w}요일`, bigday:(m,d,w)=>`${m}월 ${d}일 ${w}요일`,
   time:(h,mi)=>`${h<12?"오전":"오후"} ${h%12||12}시${mi?` ${mi}분`:""}`,
   calHead:(y,m)=>`${y}년 ${m}월`,
-  dday:n=> n>0?`결혼식까지 <b class="num">${n}일</b> 남았어요`: n===0?`오늘, 저희 결혼합니다`:`결혼한 지 <b class="num">${-n}일</b>째예요`,
+  dday:n=> n>0?`💍 결혼식까지 <b class="num">${n}일</b> 남았어요`: n===0?`오늘, 저희 결혼합니다`:`결혼한 지 <b class="num">${-n}일</b>째예요`,
   gcal:"구글 캘린더에 저장", ics:"휴대폰 캘린더에 저장",
   galHint:"사진을 누르면 크게 보고, 옆으로 넘겨 볼 수 있어요", galAll:"사진 전체 보기", galAllShort:"전체", galMore:"더 보기",
   lbMsg:"<span>저희 두 사람,</span><span>소중한 당신의 축복 속에 시작하고 싶습니다.</span>",   // <span> 하나가 한 줄
@@ -58,7 +58,7 @@ ja:{
   day:(y,m,d,w)=>`${y}年${m}月${d}日（${w}）`, bigday:(m,d,w)=>`${m}月${d}日（${w}）`,
   time:(h,mi)=>`${h<12?"午前":"午後"}${h%12||12}時${mi?`${mi}分`:""}`,
   calHead:(y,m)=>`${y}年${m}月`,
-  dday:n=> n>0?`結婚式まで あと<b class="num">${n}日</b>`: n===0?`本日、わたしたちは結婚します`:`結婚して <b class="num">${-n}日</b>目`,
+  dday:n=> n>0?`💍 結婚式まで あと<b class="num">${n}日</b>`: n===0?`本日、わたしたちは結婚します`:`結婚して <b class="num">${-n}日</b>目`,
   gcal:"Google カレンダーに登録", ics:"スマホのカレンダーに登録",
   galHint:"タップで拡大・スワイプで次の写真へ", galAll:"すべての写真を見る", galAllShort:"一覧", galMore:"もっと見る",
   lbMsg:"<span>大切な皆さまの祝福の中で、</span><span>ふたりの新しい一歩を踏み出したいと思います。</span>",
@@ -151,7 +151,7 @@ function render(){
   $("maps").innerHTML = maps.map(([k, u]) => `<a class="btn line" href="${u}" target="_blank" rel="noopener">${t(k)}</a>`).join("")
     + `<button class="btn line" type="button" id="copyAddr">${t("copyAddr")}</button>`;
   $("copyAddr").onclick = () => copy(C.place.address.ko, t("addrCopied"));
-  const dl = list => list.map(r => `<div><dt>${esc(pick(r.t))}</dt><dd>${pick(r.d) ? esc(pick(r.d)) : todo()}</dd></div>`).join("");
+  const dl = list => list.map(r => `<div><dt>${r.icon ? `<span class="ic" aria-hidden="true">${esc(r.icon)}</span>` : ""}${esc(pick(r.t))}</dt><dd>${pick(r.d) ? esc(pick(r.d)) : todo()}</dd></div>`).join("");
   $("route").innerHTML = dl(C.route); $("notice").innerHTML = dl(C.notice);
 
   // 계좌
@@ -181,6 +181,21 @@ function tick(){
   $("dday").innerHTML = t("dday")(n);
 }
 setInterval(tick, 60000);
+
+/* ═════════ 벚꽃잎 ═════════
+   첫 화면(이름·사진) 위로 꽃잎이 천천히 떨어집니다. 개수를 줄이려면 PETALS 숫자를 바꾸세요 (0 = 끄기) */
+const PETALS = 22;
+(function(){
+  const box = $("petals"); if (!box || !PETALS || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const r = (a, b) => a + Math.random() * (b - a);
+  let h = "";
+  for (let i = 0; i < PETALS; i++){
+    h += `<i class="petal" style="--x:${r(-5, 100).toFixed(1)}%;--s:${r(12, 20).toFixed(1)}px;--d:${r(9, 16).toFixed(1)}s;--w:${(-r(0, 16)).toFixed(1)}s;--sw:${r(-60, 60).toFixed(0)}px"></i>`;
+  }
+  box.innerHTML = h;
+})();
+/* 브라우저 주소창 색도 테마에 맞춤 */
+(function(){ const m = document.querySelector('meta[name="theme-color"]'); const c = getComputedStyle(document.documentElement).getPropertyValue("--paper").trim(); if (m && c) m.content = c; })();
 
 /* ═════════ 사진 ═════════ */
 $("heroImg").src = C.photos.main;
