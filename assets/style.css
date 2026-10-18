@@ -100,10 +100,13 @@ html[lang="ja"] .hero-names{font-size:clamp(18px,5vw,22px);letter-spacing:.04em;
 .hero-where{margin-top:4px;font-size:15px;color:var(--mute)}
 
 /* ───────── 공통 구간 ───────── */
-/* 제목 앞 이모티콘: HTML 의 data-emo="💌" 를 바꾸면 됩니다 */
-h2[data-emo]::before,.sub[data-emo]::before{content:attr(data-emo);display:block;font-size:30px;line-height:1;margin-bottom:12px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
-.sub[data-emo]::before{display:inline;font-size:18px;margin:0 6px 0 0}
-.info dt .ic{margin-right:5px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+/* 제목: 영문 소제목(HTML 의 data-en="...") + 금색 꽃잎 장식선, 가운데 정렬 */
+.sec h2,.sec .lead,.sub{text-align:center}
+.sec h2[data-en]::before{content:attr(data-en);display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:13px;font-weight:500;letter-spacing:.35em;padding-left:.35em;color:var(--point);margin-bottom:10px;line-height:1.4}
+.sec h2::after,.orn{content:"";display:block;width:120px;height:20px;margin:16px auto 0;background:var(--point);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20'%3E%3Cg stroke='%23000' stroke-width='1' stroke-linecap='round'%3E%3Cpath d='M4 10h38M78 10h38' fill='none'/%3E%3Cpath d='M60 3c3 4 3 10 0 14c-3-4-3-10 0-14zM53 10c4-3 10-3 14 0c-4 3-10 3-14 0z' fill='%23000' fill-opacity='.45'/%3E%3Ccircle cx='47' cy='10' r='1.3'/%3E%3Ccircle cx='73' cy='10' r='1.3'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20'%3E%3Cg stroke='%23000' stroke-width='1' stroke-linecap='round'%3E%3Cpath d='M4 10h38M78 10h38' fill='none'/%3E%3Cpath d='M60 3c3 4 3 10 0 14c-3-4-3-10 0-14zM53 10c4-3 10-3 14 0c-4 3-10 3-14 0z' fill='%23000' fill-opacity='.45'/%3E%3Ccircle cx='47' cy='10' r='1.3'/%3E%3Ccircle cx='73' cy='10' r='1.3'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.orn-top{margin:0 auto 26px}
+.orn-foot{margin:0 auto 22px}
+.hero-eyebrow{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500}
 .sec{padding:76px 24px}
 .tint{background:var(--tint)}
 h2{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.35;color:var(--main);margin:0 0 26px;letter-spacing:-.01em}
@@ -114,19 +117,20 @@ html[lang="ja"] h2{font-size:22px;letter-spacing:.02em}
 .num{font-variant-numeric:lining-nums tabular-nums}
 
 /* 초대의 글 */
-.greeting{font-family:var(--serif);font-size:17px;line-height:2.15;color:var(--ink)}
+.greeting{font-family:var(--serif);font-size:17px;line-height:2.15;color:var(--ink);text-align:center}
 html[lang="ja"] .greeting{font-size:16px}
 .greeting .gap{display:block;height:.9em}
 .families{margin:44px 0 0;padding-top:28px;border-top:1px solid var(--line);display:grid;gap:14px}
-.families div{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:12px}
+.families div{display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:4px 10px;text-align:center}
+html[lang="ja"] .families div{flex-direction:column;align-items:center;gap:2px}
 .families dt{font-size:15px;color:var(--mute)}
-.families dd{margin:0;font-family:var(--serif);font-weight:700;font-size:19px;color:var(--main);letter-spacing:.04em}
+.families dd{margin:0;font-family:var(--serif);font-weight:700;font-size:18px;color:var(--main);letter-spacing:.04em}
 .families .rel{font-family:var(--sans);font-weight:400;font-size:13.5px;color:var(--mute);margin-right:8px;letter-spacing:0}
 
 /* 일시 */
-.bigday{font-family:var(--serif);font-weight:700;font-size:34px;line-height:1.25;color:var(--main);letter-spacing:-.01em}
+.bigday{font-family:var(--serif);font-weight:700;font-size:34px;line-height:1.25;color:var(--main);letter-spacing:-.01em;text-align:center}
 html[lang="ja"] .bigday{font-size:28px}
-.bigtime{font-size:17px;color:var(--ink);margin-top:6px}
+.bigtime{font-size:17px;color:var(--ink);margin-top:6px;text-align:center}
 .cal{margin:34px 0 0;background:var(--paper);border-radius:var(--r-l);padding:20px 16px 14px}
 .cal-head{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--main);margin:0 0 10px 6px}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);font-size:14.5px;text-align:center}
@@ -137,7 +141,7 @@ html[lang="ja"] .bigday{font-size:28px}
 /* 예식일: 하트 (색은 테마의 --heart) */
 .cal-grid .on::before{content:"";position:absolute;width:40px;height:38px;left:50%;top:50%;transform:translate(-50%,-48%);z-index:-1;
   background:var(--heart);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21.5S1 14.6 1 7.3A5.8 5.8 0 0 1 12 4.4a5.8 5.8 0 0 1 11 2.9c0 7.3-11 14.2-11 14.2z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21.5S1 14.6 1 7.3A5.8 5.8 0 0 1 12 4.4a5.8 5.8 0 0 1 11 2.9c0 7.3-11 14.2-11 14.2z'/%3E%3C/svg%3E") center/contain no-repeat}
-.dday{margin-top:22px;font-size:16px;color:var(--ink)}
+.dday{margin-top:22px;font-size:16px;color:var(--ink);text-align:center}
 .dday b{font-family:var(--serif);font-weight:700;color:var(--main);font-size:19px}
 
 /* 버튼 */
@@ -176,18 +180,18 @@ html[lang="ja"] .bigday{font-size:28px}
 /* 오시는 길 */
 .hall-photo{margin:0 0 26px;border-radius:var(--r-l) var(--r-l) var(--r-l) 4px;overflow:hidden;background:var(--tint);aspect-ratio:3/2}
 .hall-photo img{display:block;width:100%;height:100%;object-fit:cover}
-.venue{font-family:var(--serif);font-weight:700;font-size:21px;color:var(--ink);line-height:1.45}
+.venue{font-family:var(--serif);font-weight:700;font-size:21px;color:var(--ink);line-height:1.45;text-align:center}
 .venue small{display:block;font-family:var(--sans);font-weight:400;font-size:15px;color:var(--mute)}
-.addr{margin-top:12px;font-size:15.5px;color:var(--ink)}
+.addr{margin-top:12px;font-size:15.5px;color:var(--ink);text-align:center}
 .venue a,.addr a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
 .addr-ko{margin-top:14px;padding:14px 16px;background:var(--tint);border-radius:var(--r-s);font-size:13.5px;line-height:1.7;color:var(--mute)}
 .addr-ko b{display:block;font-size:16px;color:var(--ink);margin-top:4px}
 .maps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px}
 .maps .btn{font-size:14px;padding:8px 6px}
 .info{margin:30px 0 0;display:grid;gap:0}
-.info div{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.info div{display:grid;grid-template-columns:84px 1fr;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
 .info div:last-child{border-bottom:1px solid var(--line)}
-html[lang="ja"] .info div{grid-template-columns:112px 1fr}
+html[lang="ja"] .info div{grid-template-columns:96px 1fr}
 .info dt{font-weight:700;font-size:15px;color:var(--main)}
 .info dd{margin:0;font-size:15px;line-height:1.75;white-space:pre-line}
 .sub + .info{margin-top:0}
@@ -219,13 +223,13 @@ html[lang="ja"] .info div{grid-template-columns:112px 1fr}
 .err{color:var(--sun);font-size:14px;line-height:1.6}
 .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
 .demo{font-size:13px;color:var(--point);background:var(--soft);border-radius:var(--r-s);padding:10px 12px;margin:-12px 0 22px}
-.done{padding:24px 20px;background:var(--paper);border-radius:var(--r-l);font-family:var(--serif);font-size:16px;line-height:1.9;color:var(--main)}
+.done{text-align:center;padding:24px 20px;background:var(--paper);border-radius:var(--r-l);font-family:var(--serif);font-size:16px;line-height:1.9;color:var(--main)}
 .done .link{margin-top:6px;font-family:var(--sans)}
 
 /* 방명록 */
 .gbform{margin-top:6px;padding:20px;background:var(--tint);border-radius:var(--r-l)}
 .gbform .btnrow{margin-top:0}
-.gb-total{margin-top:40px;font-size:14px;color:var(--mute)}
+.gb-total{margin-top:40px;font-size:14px;color:var(--mute);text-align:center}
 .wall{list-style:none;margin:10px 0 0;padding:0}
 .note{padding:20px 0;border-top:1px solid var(--line)}
 .note:last-child{border-bottom:1px solid var(--line)}
@@ -252,7 +256,6 @@ html[lang="ja"] .info div{grid-template-columns:112px 1fr}
 
 /* 마무리 */
 .foot{background:var(--tint);color:var(--ink);text-align:center;padding:72px 24px calc(110px + env(safe-area-inset-bottom,0px))}
-.foot .sprig{display:block;margin:0 auto 22px}
 .foot-names{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.06em;color:var(--main)}
 .foot-thanks{margin-top:14px;font-size:15.5px;line-height:1.85;color:var(--mute)}
 .foot .btnrow{margin-top:32px}
@@ -264,7 +267,6 @@ html.covered,html.covered body{overflow:hidden}
 .cover.leaving{opacity:0;transform:translateY(-4%);pointer-events:none}
 .cover-in{display:grid;justify-items:center;text-align:center;max-width:360px}
 .cover .sprig{width:18px;height:58px;margin-bottom:26px}
-.cover-emo{font-size:34px;line-height:1;margin-bottom:18px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .cover-names{font-family:var(--serif);font-weight:700;font-size:30px;line-height:1.3;color:var(--main);letter-spacing:.14em;display:grid;justify-items:center;gap:6px}
 html[lang="ja"] .cover-names{font-size:24px;letter-spacing:.06em}
 .cover-and{width:22px;height:1px;background:var(--point);margin:6px 0}
