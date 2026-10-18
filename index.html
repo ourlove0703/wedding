@@ -26,14 +26,14 @@
 <link rel="stylesheet" href="assets/style.css">
 <script src="config.js"></script>
 <!-- 색상 테마 적용 (config.js 의 theme) -->
-<script>document.documentElement.dataset.theme=(window.WEDDING&&window.WEDDING.theme)||"blossom"</script>
+<script>document.documentElement.dataset.theme=(window.WEDDING&&window.WEDDING.theme)||"freesia"</script>
 </head>
 <body>
 
 <!-- 표지: '청첩장 열기'를 누르면 음악과 함께 열립니다 -->
 <div class="cover" id="cover" role="dialog" aria-modal="true" aria-labelledby="coverNames">
   <div class="cover-in">
-    <p class="cover-emo" aria-hidden="true">🌸</p>
+    <p class="cover-emo" id="emoTop" aria-hidden="true">🌸</p>
     <p class="cover-names" id="coverNames"><span id="cvG"></span><span class="cover-and" aria-hidden="true"></span><span id="cvB"></span></p>
     <p class="cover-date" id="coverDate"></p>
     <button class="cover-open" id="coverOpen" type="button">
@@ -189,7 +189,7 @@
   </section>
 
   <footer class="foot">
-    <p class="cover-emo" aria-hidden="true">🌷</p>
+    <p class="cover-emo" id="emoFoot" aria-hidden="true">🌷</p>
     <p class="foot-names" id="footNames"></p>
     <p class="foot-thanks" data-t-html="thanks"></p>
     <div class="btnrow"><button class="btn ghost" type="button" id="share" data-t="share"></button><button class="btn ghost" type="button" id="copyLink" data-t="copyLink"></button></div>
