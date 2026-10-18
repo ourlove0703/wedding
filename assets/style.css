@@ -1,5 +1,5 @@
 /* 청첩장 스타일 — 색은 아래 테마에서 정합니다. config.js 의 theme 값으로 고르세요.
-   blossom(벚꽃 핑크) · sage(아이보리&세이지) · peach(크림&피치) · lavender(옅은 라벤더) */
+   freesia(수채화 노랑·프리지아) · blossom(벚꽃 핑크) · sage(아이보리&세이지) · peach(크림&피치) · lavender(옅은 라벤더) */
 :root{
   /* 기본 = blossom (벚꽃 핑크 · 화이트) */
   --bg:#F6EEEE;         /* 화면 바깥 바탕 (PC에서 보이는 양옆) */
@@ -20,6 +20,10 @@
   --sans:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --r-s:10px; --r-l:18px;
   color-scheme:light;
+}
+html[data-theme="freesia"]{
+  --bg:#F6F0DE; --paper:#FFFDF6; --tint:#FFF8E4; --main:#9A6E1E; --point:#EBC25A; --soft:rgba(235,194,90,.18);
+  --leaf:#93B276; --ink:#3B3527; --mute:#7B725F; --line:#F1E6C6; --heart:#F2B544; --petal1:#FFE58A; --petal2:#F6C646; --shadow:154,110,30;
 }
 html[data-theme="sage"]{
   --bg:#EEF0E8; --paper:#FFFEFA; --tint:#F3F4EC; --main:#5D7453; --point:#A9BE98; --soft:rgba(169,190,152,.18);
@@ -353,3 +357,33 @@ html.covered .bgm{display:none}
 #rsvp .hint{margin-top:2px}
 #rsvp .btn.solid{min-height:48px}
 html[lang="ja"] .venue{font-size:19px;letter-spacing:-.02em}
+
+/* ═════════ 수채화 프리지아 테마 (theme: "freesia") ═════════
+   그림 파일: assets/freesia/ (fl-corner 모서리 꽃 · fl-wash 바탕 번짐 · fz-* 날리는 꽃잎) */
+html[data-theme="freesia"] .hero-top,html[data-theme="freesia"] .hero-photo,html[data-theme="freesia"] .hero-meta{position:relative;z-index:1}
+html[data-theme="freesia"] .hero::before,html[data-theme="freesia"] .hero::after,
+html[data-theme="freesia"] .cover::before,html[data-theme="freesia"] .cover::after,
+html[data-theme="freesia"] .foot::before,html[data-theme="freesia"] #invite::before,html[data-theme="freesia"] #guestbook::before{
+  content:"";position:absolute;pointer-events:none;background:url("freesia/fl-corner.webp") top right/contain no-repeat;aspect-ratio:760/640}
+html[data-theme="freesia"] .hero::before{top:-26px;right:-22px;width:60%;z-index:0}
+html[data-theme="freesia"] .hero::after{bottom:-56px;left:-70px;width:50%;transform:rotate(180deg);opacity:.6;z-index:0}
+html[data-theme="freesia"] .hero-photo{border:6px solid #fff;box-shadow:0 10px 30px rgba(var(--shadow),.16)}
+html[data-theme="freesia"] .hero-photo .dapple{display:none}
+html[data-theme="freesia"] .cover{background:var(--paper) url("freesia/fl-wash.webp") center/cover no-repeat;overflow:hidden}
+html[data-theme="freesia"] .cover::before{top:-24px;right:-24px;width:min(80%,420px)}
+html[data-theme="freesia"] .cover::after{bottom:-40px;left:-60px;width:min(78%,400px);transform:rotate(180deg)}
+html[data-theme="freesia"] .cover-in{position:relative;z-index:1}
+html[data-theme="freesia"] .tint{background:var(--tint) url("freesia/fl-wash.webp") center/cover no-repeat}
+html[data-theme="freesia"] .cal,html[data-theme="freesia"] .acct-g,html[data-theme="freesia"] .more{background:rgba(255,255,255,.82)}
+html[data-theme="freesia"] #invite,html[data-theme="freesia"] #guestbook,html[data-theme="freesia"] .foot{position:relative;overflow:hidden}
+html[data-theme="freesia"] #invite>*,html[data-theme="freesia"] #guestbook>*,html[data-theme="freesia"] .foot>*{position:relative;z-index:1}
+html[data-theme="freesia"] #invite::before{top:-24px;right:-24px;width:46%;opacity:.85}
+html[data-theme="freesia"] #guestbook::before{top:-24px;right:-24px;width:40%;opacity:.75}
+html[data-theme="freesia"] .foot{background:var(--tint) url("freesia/fl-wash.webp") center/cover no-repeat}
+html[data-theme="freesia"] .foot::before{bottom:-30px;left:-50px;width:62%;transform:rotate(180deg);opacity:.85}
+/* 날리는 프리지아 꽃잎 · 작은 꽃송이 */
+html[data-theme="freesia"] .petal{width:calc(var(--s) * 1.9);height:calc(var(--s) * 1.9);border-radius:0;box-shadow:none;background:url("freesia/fz-petal1.webp") center/contain no-repeat}
+html[data-theme="freesia"] .petal::after{display:none}
+html[data-theme="freesia"] .petal.v2{background-image:url("freesia/fz-petal2.webp")}
+html[data-theme="freesia"] .petal.v3{background-image:url("freesia/fz-petal3.webp")}
+html[data-theme="freesia"] .petal.v4{background-image:url("freesia/fz-flower.webp");width:calc(var(--s) * 2.3);height:calc(var(--s) * 2.3)}

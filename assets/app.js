@@ -190,9 +190,14 @@ const PETALS = 22;
   const r = (a, b) => a + Math.random() * (b - a);
   let h = "";
   for (let i = 0; i < PETALS; i++){
-    h += `<i class="petal" style="--x:${r(-5, 100).toFixed(1)}%;--s:${r(12, 20).toFixed(1)}px;--d:${r(9, 16).toFixed(1)}s;--w:${(-r(0, 16)).toFixed(1)}s;--sw:${r(-60, 60).toFixed(0)}px"></i>`;
+    h += `<i class="petal v${1 + (i % 4)}" style="--x:${r(-5, 100).toFixed(1)}%;--s:${r(12, 20).toFixed(1)}px;--d:${r(9, 16).toFixed(1)}s;--w:${(-r(0, 16)).toFixed(1)}s;--sw:${r(-60, 60).toFixed(0)}px"></i>`;
   }
   box.innerHTML = h;
+})();
+/* 표지·마무리 이모티콘도 테마에 맞춤 */
+(function(){
+  const E = { freesia: ["🌼", "💛"], blossom: ["🌸", "🌷"], sage: ["🌿", "🤍"], peach: ["🌷", "🧡"], lavender: ["💜", "🌸"] }[document.documentElement.dataset.theme];
+  if (E){ $("emoTop").textContent = E[0]; $("emoFoot").textContent = E[1]; }
 })();
 /* 브라우저 주소창 색도 테마에 맞춤 */
 (function(){ const m = document.querySelector('meta[name="theme-color"]'); const c = getComputedStyle(document.documentElement).getPropertyValue("--paper").trim(); if (m && c) m.content = c; })();
