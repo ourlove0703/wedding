@@ -33,6 +33,13 @@ html[data-theme="peach"]{
   --bg:#F5EEE6; --paper:#FFFDF9; --tint:#FBF2E9; --main:#9C6F4E; --point:#E2BB98; --soft:rgba(226,187,152,.18);
   --leaf:#93AE7B; --ink:#3A322C; --mute:#7C7066; --line:#EFE4D7; --heart:#EFA48F; --petal1:#FFE0D6; --petal2:#F9CBBE; --shadow:156,111,78;
 }
+/* 여름 스카이 블루 · 하얀 꽃잎 (7월 예식용) */
+html[data-theme="sky"]{
+  --bg:#EAF1F6; --paper:#FCFEFF; --tint:#F0F6FA; --main:#4F7393; --point:#93B6D0; --soft:rgba(147,182,208,.18);
+  --leaf:#86AE88; --ink:#2E3640; --mute:#6B7682; --line:#DFE9F0; --heart:#7FA7C8; --petal1:#FFFFFF; --petal2:#E3EDF5; --shadow:79,115,147;
+}
+/* 하얀 꽃잎이 밝은 바탕에 묻히지 않도록 살짝 그림자 */
+html[data-theme="sky"] .petal{box-shadow:0 1px 4px rgba(79,115,147,.28)}
 html[data-theme="lavender"]{
   --bg:#F0EEF6; --paper:#FFFFFF; --tint:#F6F3FB; --main:#7B6AA6; --point:#C4B7E0; --soft:rgba(196,183,224,.2);
   --leaf:#8FAF7A; --ink:#33303B; --mute:#75707F; --line:#ECE7F4; --heart:#EE9BB6; --petal1:#FFE0EA; --petal2:#F2CDE6; --shadow:123,106,166;
