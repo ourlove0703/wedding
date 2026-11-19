@@ -160,7 +160,7 @@ function render(){
   // 계좌
   const open = [...document.querySelectorAll(".acct-g")].map(d => d.open);
   $("accounts").innerHTML = [["groom", "groomAcct"], ["bride", "brideAcct"]].map(([k, lab], gi) => `
-    <details class="acct-g"${open[gi] ? " open" : ""}><summary>${t(lab)}</summary>
+    <details class="acct-g"${open.length ? (open[gi] ? " open" : "") : " open"}><summary>${t(lab)}</summary>
       ${C.accounts[k].map(x => { const v = x.bank && x.num ? `${x.bank} ${x.num}` : "";
         return `<div class="acct"><div><div class="who">${esc(pick(x.who))}</div><div class="no num">${v ? esc(v) : todo()}</div></div>${v ? `<button class="copy" type="button" data-copy="${esc(v)}">${t("copy")}</button>` : ""}</div>`; }).join("")}
     </details>`).join("");
@@ -276,6 +276,11 @@ if (C.music){
 }
 (function(){
   const cover = $("cover");
+  if (C.cover === false){                       // 표지 없이 바로 본문
+    cover.hidden = true;
+    if (C.music){ const b = $("bgm"); b.classList.add("hint"); b.addEventListener("click", () => b.classList.remove("hint"), { once: true }); }
+    return;
+  }
   // 바로가기 링크(#rsvp 등)로 들어온 경우에도 표지는 한 번 보여 줍니다
   document.documentElement.classList.add("covered");
   const open = withMusic => {

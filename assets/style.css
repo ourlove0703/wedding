@@ -481,3 +481,13 @@ html[lang="ja"] h2{font-size:20px;letter-spacing:.1em}
 .fld>label,.fld legend,.fld .lbl{font-weight:500;letter-spacing:.06em}
 h2{letter-spacing:.1em;padding-left:.1em}
 .acct-g summary{font-weight:500;letter-spacing:.08em}
+
+/* ═════ 첫 화면에 사진 + 이름 + 날짜가 한 번에 보이도록 (카톡 화면 기준) ═════ */
+.hero{min-height:0;padding-bottom:36px}
+.hero-photo{height:clamp(260px,calc(100vh - 290px),560px);height:clamp(260px,calc(100svh - 290px),560px)}
+.hero-top{margin-top:22px;gap:10px}
+.hero-meta{padding-top:14px}
+.hero-meta::before{margin-bottom:14px}
+/* ♪ 버튼: 처음 몇 초 은은하게 반짝 (누르면 멈춤) */
+.bgm.hint{animation:bgmHint 1.8s ease-out 4}
+@keyframes bgmHint{0%{box-shadow:0 0 0 0 rgba(var(--shadow),.45)}70%,100%{box-shadow:0 0 0 14px rgba(var(--shadow),0)}}
