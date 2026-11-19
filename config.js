@@ -10,8 +10,9 @@ window.WEDDING = {
         "blossom"  : 벚꽃 핑크 · 화이트
         "sage"     : 아이보리 · 세이지 그린
         "peach"    : 크림 · 피치 베이지
-        "lavender" : 아주 옅은 라벤더 · 화이트 */
-  theme: "freesia",
+        "lavender" : 아주 옅은 라벤더 · 화이트
+        "sky"      : 여름 스카이 블루 · 하얀 꽃잎 */
+  theme: "sky",
 
   /* ① 구글 시트 연결 주소 (README 2단계에서 복사한 웹 앱 URL)
         비워 두면 '미리보기 모드'로 동작합니다. (내 브라우저에만 저장, 실제로 전송되지 않음) */
