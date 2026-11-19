@@ -293,7 +293,7 @@ if (C.music){
 (function(){
   let lastY = scrollY, ticking = false;
   addEventListener("scroll", () => { if (ticking) return; ticking = true; requestAnimationFrame(() => {
-    const y = scrollY; if (y < 120 || y < lastY - 4) $("topbar").classList.remove("hide"); else if (y > lastY + 4) $("topbar").classList.add("hide");
+    const y = scrollY; $("topbar").classList.toggle("hide", y >= 120);   // 맨 위에서만 보임 (제목 가림 방지)
     lastY = y; ticking = false; }); }, { passive: true });
   const dock = $("dock");
   dock.classList.add("off");
@@ -433,9 +433,9 @@ function renderWall(){
     const nm = document.createElement("span"); nm.className = "note-n"; nm.textContent = it.name;
     const dt = document.createElement("span"); dt.className = "note-d num"; dt.textContent = fmtDate(it.created_at);
     const x = document.createElement("button"); x.type = "button"; x.className = "note-x"; x.textContent = t("gbDel"); x.dataset.id = it.id;
-    h.append(nm, dt, x);
+    h.append(nm, dt);
     const m = document.createElement("p"); m.className = "note-m"; m.textContent = it.message;
-    n.append(h, m); wall.appendChild(n);
+    n.append(h, m, x); wall.appendChild(n);   // 삭제 버튼은 글 아래
   }
   gb.items.forEach(i => gb.seen.add(i.id));
   $("gbMore").hidden = !gb.hasMore;
@@ -494,4 +494,12 @@ try { const s = localStorage.getItem("inv-lang"); if (s) start = s; } catch(e){}
 if (/^#ja$/i.test(location.hash)) start = "ja";                               // 링크 끝 #ja → 일본어
 if (/^#ko$/i.test(location.hash)) start = "ko";
 setLang(start);
+
+/* ═════════ 스크롤하면 구간이 천천히 나타남 ═════════ */
+(function(){
+  const els = [...document.querySelectorAll(".sec > *, .foot > *")];
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  els.forEach(el => { el.classList.add("reveal"); io.observe(el); });
+})();
 })();
