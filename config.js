@@ -14,6 +14,9 @@ window.WEDDING = {
         "sky"      : 여름 스카이 블루 · 하얀 꽃잎 */
   theme: "sky",
 
+  /* 표지('청첩장 열기' 화면) — false: 표지 없이 바로 본문 (음악은 오른쪽 위 ♪ 버튼으로) / true: 표지 보임 */
+  cover: false,
+
   /* ① 구글 시트 연결 주소 (README 2단계에서 복사한 웹 앱 URL)
         비워 두면 '미리보기 모드'로 동작합니다. (내 브라우저에만 저장, 실제로 전송되지 않음) */
   api: "https://script.google.com/macros/s/AKfycbyFuOoD1cji6ebkOBu1N_R_fIBcKqK9h5APEM0Gz881aPt8_dZpH5jMLFjNlDNfz_KCIQ/exec",   // ← ★ 기존에 쓰던 구글 시트 주소를 다시 붙여넣으세요 (비우면 미리보기 모드)
