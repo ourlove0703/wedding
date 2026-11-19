@@ -22,7 +22,7 @@ ko:{
   lbMsg:"<span>저희 두 사람,</span><span>소중한 당신의 축복 속에 시작하고 싶습니다.</span>",   // <span> 하나가 한 줄
   father:"아버지", mother:"어머니", rel:(f,m,o)=>`${f} · ${m}의 ${o}`, todo:"확인 필요",
   kakao:"카카오맵", naver:"네이버 지도", google:"구글 지도", copyAddr:"주소 복사", taxi:"",
-  rsvpIntro:"식사와 자리를 준비할 수 있도록<br>참석 여부를 미리 알려 주세요.",
+  rsvpIntro:by=> by?`식사와 자리를 준비할 수 있도록<br><b>${by}까지</b> 참석 여부를 알려 주세요.`:"식사와 자리를 준비할 수 있도록<br>참석 여부를 미리 알려 주세요.",
   demo:"미리보기 모드예요. 입력한 내용은 이 브라우저에만 저장됩니다. (config.js 의 api 를 채우면 실제로 전송돼요)",
   fAttend:"참석 여부", attendYes:"참석할게요", attendNo:"참석이 어려워요",
   fSide:"어느 쪽 하객이신가요?", groomSide:"신랑측", brideSide:"신부측",
@@ -64,7 +64,7 @@ ja:{
   lbMsg:"<span>大切な皆さまの祝福の中で、</span><span>ふたりの新しい一歩を踏み出したいと思います。</span>",
   father:"父", mother:"母", rel:(f,m,o)=>`${f}、${m}の${o}`, todo:"確認中",
   kakao:"カカオマップ", naver:"NAVER Map", google:"Google マップ", copyAddr:"住所をコピー", taxi:"タクシーでは運転手の方に下の韓国語住所をお見せください",
-  rsvpIntro:"お食事とお席のご準備のため<br>ご出欠を事前にお知らせください。",
+  rsvpIntro:by=> by?`お食事とお席のご準備のため<br><b>${by}まで</b>にご出欠をお知らせください。`:"お食事とお席のご準備のため<br>ご出欠を事前にお知らせください。",
   demo:"プレビューモードです。入力内容はこのブラウザにのみ保存されます。",
   fAttend:"ご出欠", attendYes:"出席します", attendNo:"欠席します",
   fSide:"ご関係", groomSide:"新郎側", brideSide:"新婦側",
@@ -108,7 +108,10 @@ const siteUrl = () => (C.siteUrl && !/YOUR-ID/.test(C.siteUrl)) ? C.siteUrl : lo
 function render(){
   document.documentElement.lang = L;
   document.querySelectorAll("[data-t]").forEach(el => el.textContent = t(el.dataset.t));
-  document.querySelectorAll("[data-t-html]").forEach(el => el.innerHTML = t(el.dataset.tHtml));
+  document.querySelectorAll("[data-t-html]").forEach(el => { const v = t(el.dataset.tHtml); el.innerHTML = typeof v === "function" ? v(pick(C.rsvpBy)) : v; });
+  // 일본어 화면: 계좌 구간 숨김 (config.js 의 giftJa)
+  const hideGift = L === "ja" && C.giftJa === false;
+  $("gift").hidden = hideGift; document.querySelector('.dock a[href="#gift"]').hidden = hideGift;
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === L));
   document.querySelectorAll(".demo").forEach(el => el.hidden = !DEMO);
 
@@ -152,7 +155,7 @@ function render(){
     + `<button class="btn line" type="button" id="copyAddr">${t("copyAddr")}</button>`;
   $("copyAddr").onclick = () => copy(C.place.address.ko, t("addrCopied"));
   const dl = list => list.map(r => `<div><dt>${esc(pick(r.t))}</dt><dd>${pick(r.d) ? esc(pick(r.d)) : todo()}</dd></div>`).join("");
-  $("route").innerHTML = dl(C.route); $("notice").innerHTML = dl(C.notice);
+  $("route").innerHTML = dl(L === "ja" ? [...C.route].sort((a, b) => !!b.jaFirst - !!a.jaFirst) : C.route); $("notice").innerHTML = dl(C.notice);
 
   // 계좌
   const open = [...document.querySelectorAll(".acct-g")].map(d => d.open);
